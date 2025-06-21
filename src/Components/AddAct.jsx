@@ -28,60 +28,124 @@ export const AddAct = () => {
 
   return (
     <>
-      <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div
+        className="w-100 d-flex justify-content-center align-items-center min-vh-100"
+        style={{ background: "#2C2C34" }}
+      >
         <div
-          className="bg-white p-4 rounded shadow w-100"
-          style={{ maxWidth: "500px" }}
+          style={{
+            maxWidth: "500px",
+            width: "100%",
+            background: "#2E2E38",
+            borderRadius: "20px",
+            boxShadow: "20px 20px 60px #23232b, -20px -20px 60px #3a3a46",
+            padding: "2rem",
+          }}
         >
+          <div className="text-center mb-4">
+            <div
+              style={{
+                width: 60,
+                height: 60,
+                margin: "0 auto",
+                borderRadius: "50%",
+                background: "#2C2C34",
+                boxShadow: "8px 8px 16px #23232b, -8px -8px 16px #3a3a46",
+              }}
+            >
+              <span className="d-flex justify-content-center align-items-center h-100 fs-3">
+                📝
+              </span>
+            </div>
+            <h2 className="text-light fw-bold mt-3">Create Activity</h2>
+          </div>
+
           {loading ? (
-            <div className="text-center">
-              <div className="spinner-border text-primary mb-3" role="status" />
-              <h5 className="mt-2">Creating Activity...</h5>
+            <div className="text-center py-5">
+              <div className="spinner-border text-light mb-3" role="status" />
+              <p className="text-secondary">Saving...</p>
             </div>
           ) : (
             <form>
-              <h3 className="text-center mb-4">Create New Activity</h3>
-
-              <div className="mb-3">
-                <label htmlFor="titleAct" className="form-label">
-                  Title
-                </label>
+              {/** Title, Neumorphic input */}
+              <div className="mb-4">
                 <input
                   type="text"
-                  id="titleAct"
-                  className="form-control"
-                  placeholder="Enter activity title"
                   value={titleAct}
                   onChange={(e) => setTitleAct(e.target.value)}
+                  placeholder="Activity Title"
                   required
+                  style={{
+                    width: "100%",
+                    padding: "1rem",
+                    borderRadius: "12px",
+                    border: "none",
+                    background: "#2C2C34",
+                    boxShadow:
+                      "inset 5px 5px 10px #23232b, inset -5px -5px 10px #3a3a46",
+                    color: "#eee",
+                    fontSize: "1rem",
+                  }}
                 />
               </div>
 
-              <div className="mb-3">
-                <label htmlFor="textAct" className="form-label">
-                  Description
-                </label>
+              {/** Description */}
+              <div className="mb-5">
                 <textarea
-                  id="textAct"
-                  className="form-control"
-                  placeholder="Enter activity details"
                   value={textAct}
                   onChange={(e) => setTextAct(e.target.value)}
-                  rows="4"
+                  placeholder="Describe your activity..."
                   required
-                />
+                  rows="4"
+                  style={{
+                    width: "100%",
+                    padding: "1rem",
+                    borderRadius: "12px",
+                    border: "none",
+                    background: "#2C2C34",
+                    boxShadow:
+                      "inset 5px 5px 10px #23232b, inset -5px -5px 10px #3a3a46",
+                    color: "#eee",
+                    fontSize: "1rem",
+                  }}
+                ></textarea>
               </div>
 
+              {/** Submit Button */}
               <div className="d-grid">
                 <button
-                  className="btn btn-success"
-                  disabled={loading}
                   onClick={(e) => {
                     e.preventDefault();
                     addActivityHanlder();
                   }}
+                  disabled={loading}
+                  className="w-100"
+                  style={{
+                    padding: "0.85rem 1rem",
+                    borderRadius: "12px",
+                    border: "none",
+                    background: "#6C63FF",
+                    color: "#ffffff",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.5rem",
+                    letterSpacing: "0.5px",
+                    boxShadow: "0 4px 15px rgba(108, 99, 255, 0.3)",
+                    transition: "all 0.3s ease-in-out",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.boxShadow =
+                      "0 0 20px rgba(108, 99, 255, 0.6)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.boxShadow =
+                      "0 4px 15px rgba(108, 99, 255, 0.3)")
+                  }
                 >
-                  Create Activity
+                  <span style={{ fontSize: "1.2rem" }}>🚀</span> Create Activity
                 </button>
               </div>
             </form>
