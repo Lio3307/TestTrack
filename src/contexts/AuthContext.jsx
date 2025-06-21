@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { addDoc, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const AuthProvider = createContext()
 
@@ -43,7 +43,7 @@ export const AuthContext = ({children}) => {
             await createUserWithEmailAndPassword(auth, email, password)
             const user = auth.currentUser
             const docRef = doc(db, "Users", user.uid)
-            await addDoc(docRef, {
+            await setDoc(docRef, {
                 userId: user.uid,
                 username: username,
                 email: email,
@@ -66,7 +66,7 @@ export const AuthContext = ({children}) => {
             const docRef = doc(db, "Users", googleUser.uid)
             const userGoogle = await getDoc(docRef)
             if(!userGoogle.exists()){
-                await addDoc(docRef, {
+                await setDoc(docRef, {
                     userId: googleUser.uid,
                     username: googleUser.displayName,
                     email: googleUser.email
