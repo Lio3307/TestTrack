@@ -1,6 +1,11 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useState } from "react";
+{
+  /** Title, Neumorphic input */
+}
+
+import { Link } from "react-router-dom";
 
 export const AddAct = () => {
   const [titleAct, setTitleAct] = useState("");
@@ -8,6 +13,10 @@ export const AddAct = () => {
   const [loading, setLoading] = useState(false);
 
   const addActivityHanlder = async () => {
+    if(!titleAct.trim() || !textAct.trim()) {
+      alert("Input Field Cannot Be Empty!!")
+      return
+    }
     try {
       setLoading(true);
       const user = auth.currentUser;
@@ -29,7 +38,7 @@ export const AddAct = () => {
   return (
     <>
       <div
-        className="w-100 d-flex justify-content-center align-items-center min-vh-100"
+        className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
         style={{ background: "#2C2C34" }}
       >
         <div
@@ -40,8 +49,27 @@ export const AddAct = () => {
             borderRadius: "20px",
             boxShadow: "20px 20px 60px #23232b, -20px -20px 60px #3a3a46",
             padding: "2rem",
+            position: "relative",
           }}
         >
+          <Link
+            to="/home"
+            style={{
+              position: "absolute",
+              top: "16px",
+              right: "16px",
+              backgroundColor: "#dc3545",
+              color: "#fff",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              fontSize: "0.9rem",
+              boxShadow: "2px 2px 6px rgba(0,0,0,0.4)",
+            }}
+          >
+            Cancel
+          </Link>
+
           <div className="text-center mb-4">
             <div
               style={{
@@ -51,11 +79,12 @@ export const AddAct = () => {
                 borderRadius: "50%",
                 background: "#2C2C34",
                 boxShadow: "8px 8px 16px #23232b, -8px -8px 16px #3a3a46",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <span className="d-flex justify-content-center align-items-center h-100 fs-3">
-                📝
-              </span>
+              <span className="fs-3">📝</span>
             </div>
             <h2 className="text-light fw-bold mt-3">Create Activity</h2>
           </div>
@@ -67,7 +96,6 @@ export const AddAct = () => {
             </div>
           ) : (
             <form>
-              {/** Title, Neumorphic input */}
               <div className="mb-4">
                 <input
                   type="text"
@@ -89,7 +117,6 @@ export const AddAct = () => {
                 />
               </div>
 
-              {/** Description */}
               <div className="mb-5">
                 <textarea
                   value={textAct}
@@ -111,7 +138,6 @@ export const AddAct = () => {
                 ></textarea>
               </div>
 
-              {/** Submit Button */}
               <div className="d-grid">
                 <button
                   onClick={(e) => {

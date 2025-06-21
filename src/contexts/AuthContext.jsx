@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
-import { addDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 
@@ -101,12 +101,6 @@ export const AuthContext = ({ children }) => {
       const docRef = doc(db, "Users", googleUser.uid);
       const userGoogle = await getDoc(docRef);
       if (!userGoogle.exists()) {
-        await addDoc(docRef, {
-          userId: googleUser.uid,
-          username: googleUser.displayName,
-          email: googleUser.email,
-        });
-      } else if(userGoogle.exists()){
         await setDoc(docRef, {
           userId: googleUser.uid,
           username: googleUser.displayName,
