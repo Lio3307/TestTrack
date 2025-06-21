@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, doc } from "firebase/firestore";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { addDoc, doc, getDoc } from "firebase/firestore";
 
 const AuthProvider = createContext()
 
@@ -58,7 +58,32 @@ export const AuthContext = ({children}) => {
         }
     }
 
+    async function signInGoogle(db, auth, googleProvider) {
+        try {
+            setLoading(true)
+            const result = await signInWithPopup(auth, googleProvider)
+            const googleUser = result.user
+            const docRef = doc(db, "Users", googleUser.uid)
+            const userGoogle = await getDoc(docRef)
+            if(!userGoogle.exists()){
+                await addDoc(docRef, {
+                    userId: googleUser.uid,
+                    username: googleUser.displayName,
+                    email: googleUser.email
+                })
+            }
+
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     const value = {
+        loading,
+        setLoading,
         email,
         setEmail,
         password,
@@ -67,6 +92,7 @@ export const AuthContext = ({children}) => {
         setUsername,
         signInEmail,
         signUpEmail,
+        signInGoogle,
     }
 
     return (
