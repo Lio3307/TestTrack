@@ -58,8 +58,19 @@ export const AuthContext = ({children}) => {
         }
     }
 
+    const value = {
+        email,
+        setEmail,
+        password,
+        setPassword,
+        username,
+        setUsername,
+        signInEmail,
+        signUpEmail,
+    }
+
     return (
-        <AuthProvider.Provider>
+        <AuthProvider.Provider value={value}>
             {children}
         </AuthProvider.Provider>
     )
