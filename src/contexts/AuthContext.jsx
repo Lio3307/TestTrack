@@ -14,11 +14,17 @@ export const AuthContext = ({children}) => {
 
     async function signInEmail(auth, email, password) {
         if(!email.trim() || !password.trim()) {
-            
+            alert("Input Field Cannot Empt!!")
+            return
+        }
+        if(password.length < 6 && typeof password === 'string') {
+            alert("Password At Least 6 Character")
+            return
         }
 
         try {
-            
+            setLoading(true)
+            await signInWithEmailAndPassword(auth, email, password)
         } catch (err) {
             console.error(err)
         }
@@ -46,6 +52,9 @@ export const AuthContext = ({children}) => {
             console.error(err)
         } finally {
             setLoading(false)
+            setEmail('')
+            setPassword('')
+            setUsername('')
         }
     }
 
