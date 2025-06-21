@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export const AuthContext = ({ children }) => {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
 
@@ -29,21 +29,21 @@ export const AuthContext = ({ children }) => {
           const userSnap = await getDoc(userDocRef);
           if (userSnap.exists()) {
             setUserData(userSnap.data());
-            navigate("/home")
+            navigate("/home");
           } else {
             alert("User Doc Not Found");
             setUserData(null);
           }
         } catch (err) {
           console.error(err);
-          setUserData(null)
+          setUserData(null);
         }
       } else {
-        setUserData(null)
-      } 
-      setLoading(false)
+        setUserData(null);
+      }
+      setLoading(false);
 
-      return () => unsubscribe()
+      return () => unsubscribe();
     });
   }, []);
 
@@ -101,6 +101,12 @@ export const AuthContext = ({ children }) => {
       const docRef = doc(db, "Users", googleUser.uid);
       const userGoogle = await getDoc(docRef);
       if (!userGoogle.exists()) {
+        await addDoc(docRef, {
+          userId: googleUser.uid,
+          username: googleUser.displayName,
+          email: googleUser.email,
+        });
+      } else if(userGoogle.exists()){
         await setDoc(docRef, {
           userId: googleUser.uid,
           username: googleUser.displayName,

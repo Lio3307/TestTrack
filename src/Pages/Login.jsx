@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuthContext } from "../contexts/AuthContext";
 import { auth, db, googleProvider } from "../firebase/config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const {
     email,
@@ -21,6 +22,8 @@ export const Login = () => {
       await sigInEmail(auth, email, password);
     } catch (err) {
       console.error(err);
+    } finally {
+        navigate('/home')
     }
   };
 
@@ -97,7 +100,13 @@ export const Login = () => {
               disabled={loading}
               onClick={(e) => {
                 e.preventDefault();
-                signInGoogle(db, auth, googleProvider);
+                try {
+                    signInGoogle(db, auth, googleProvider);
+                } catch (err) {
+                    console.error(err)
+                } finally {
+                    navigate('/home')
+                }
               }}
             >
               Login with Google

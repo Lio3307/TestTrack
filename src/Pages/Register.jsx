@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { auth, db, googleProvider } from "../firebase/config";
 
@@ -17,6 +17,8 @@ export const Register = () => {
     signInGoogle,
   } = useAuthContext();
 
+  const navigate = useNavigate();
+
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const handleRegister = async () => {
@@ -27,6 +29,7 @@ export const Register = () => {
       console.error(err);
     } finally {
       setLoading(false);
+      navigate("/home");
     }
   };
   return (
@@ -116,7 +119,13 @@ export const Register = () => {
               className="btn btn-danger"
               onClick={(e) => {
                 e.preventDefault();
-                signInGoogle(db, auth, googleProvider);
+                try {
+                  signInGoogle(db, auth, googleProvider);
+                } catch (error) {
+                  console.error(error);
+                } finally {
+                  navigate("/home");
+                }
               }}
             >
               Sign Up with Google
