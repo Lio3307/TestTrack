@@ -20,8 +20,9 @@ export const Home = () => {
               width: "160px",
               height: "160px",
               backgroundColor: "#2E2E38",
-              borderRadius: "20px",
-              boxShadow: "12px 12px 24px #23232b, -12px -12px 24px #3a3a46",
+              borderRadius: "50%",
+              boxShadow:
+                "inset 8px 8px 16px #23232b, inset -8px -8px 16px #3a3a46",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -29,26 +30,36 @@ export const Home = () => {
               color: "#f1f1f1",
               transition: "all 0.3s ease-in-out",
               textAlign: "center",
+              cursor: "pointer",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow =
-                "0 0 20px rgba(108, 99, 255, 0.4)";
-              e.currentTarget.style.transform = "scale(1.04)";
-              e.currentTarget.style.backgroundColor = "#363646";
+                "0 0 25px rgba(108, 99, 255, 0.5)";
+              e.currentTarget.style.transform = "scale(1.07)";
+              e.currentTarget.style.backgroundColor = "#38384a";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow =
-                "12px 12px 24px #23232b, -12px -12px 24px #3a3a46";
+                "inset 8px 8px 16px #23232b, inset -8px -8px 16px #3a3a46";
               e.currentTarget.style.transform = "scale(1)";
               e.currentTarget.style.backgroundColor = "#2E2E38";
             }}
           >
-            <span style={{ fontSize: "3rem", lineHeight: 1 }}>＋</span>
+            <span
+              style={{
+                fontSize: "3rem",
+                lineHeight: 1,
+                color: "#6C63FF",
+                transition: "transform 0.3s",
+              }}
+            >
+              ＋
+            </span>
             <span
               style={{
                 fontWeight: "600",
-                marginTop: "0.4rem",
-                fontSize: "1rem",
+                marginTop: "0.5rem",
+                fontSize: "0.95rem",
               }}
             >
               Add Activity

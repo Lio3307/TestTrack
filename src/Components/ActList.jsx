@@ -83,7 +83,7 @@ export const ActList = () => {
                     marginBottom: "0.75rem",
                   }}
                 >
-                  {list.createdAt.toDate().toLocaleString()}
+                  Created : {list.createdAt.toDate().toLocaleString()}
                 </p>
                 <p style={{ fontSize: "1rem", lineHeight: 1.5 }}>
                   {list.textActivity.length > 90

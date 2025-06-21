@@ -1,6 +1,7 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 {
   /** Title, Neumorphic input */
 }
@@ -12,10 +13,12 @@ export const AddAct = () => {
   const [textAct, setTextAct] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const addActivityHanlder = async () => {
-    if(!titleAct.trim() || !textAct.trim()) {
-      alert("Input Field Cannot Be Empty!!")
-      return
+    if (!titleAct.trim() || !textAct.trim()) {
+      alert("Input Field Cannot Be Empty!!");
+      return;
     }
     try {
       setLoading(true);
@@ -32,6 +35,7 @@ export const AddAct = () => {
     } finally {
       setLoading(false);
       alert("Activity Has Been Created!!");
+      navigate("/home");
     }
   };
 
@@ -58,16 +62,31 @@ export const AddAct = () => {
               position: "absolute",
               top: "16px",
               right: "16px",
-              backgroundColor: "#dc3545",
+              backgroundColor: "#3a3a46",
               color: "#fff",
-              padding: "6px 12px",
-              borderRadius: "8px",
+              padding: "8px 14px",
+              borderRadius: "10px",
               textDecoration: "none",
-              fontSize: "0.9rem",
-              boxShadow: "2px 2px 6px rgba(0,0,0,0.4)",
+              fontSize: "0.85rem",
+              fontWeight: "500",
+              boxShadow: "4px 4px 10px #1e1e24, -2px -2px 6px #4a4a58",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "all 0.2s ease-in-out",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#dc3545";
+              e.currentTarget.style.boxShadow =
+                "0 0 12px rgba(220, 53, 69, 0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#3a3a46";
+              e.currentTarget.style.boxShadow =
+                "4px 4px 10px #1e1e24, -2px -2px 6px #4a4a58";
             }}
           >
-            Cancel
+            ❌ Cancel
           </Link>
 
           <div className="text-center mb-4">
