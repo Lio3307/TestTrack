@@ -28,41 +28,66 @@ export const AddAct = () => {
 
   return (
     <>
-      {loading ? (
-        <>
-          <h3>Creating Activity...</h3>
-        </>
-      ) : (
-        <>
-          <label>Create Title</label>
-          <input
-            value={titleAct}
-            onChange={(e) => {
-              setTitleAct(e.target.value);
-            }}
-            type="text"
-          />
+      <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+        <div
+          className="bg-white p-4 rounded shadow w-100"
+          style={{ maxWidth: "500px" }}
+        >
+          {loading ? (
+            <div className="text-center">
+              <div className="spinner-border text-primary mb-3" role="status" />
+              <h5 className="mt-2">Creating Activity...</h5>
+            </div>
+          ) : (
+            <form>
+              <h3 className="text-center mb-4">Create New Activity</h3>
 
-          <label>Create Text</label>
-          <textarea
-            value={textAct}
-            onChange={(e) => {
-              setTextAct(e.target.value);
-            }}
-            type="text"
-          />
+              <div className="mb-3">
+                <label htmlFor="titleAct" className="form-label">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="titleAct"
+                  className="form-control"
+                  placeholder="Enter activity title"
+                  value={titleAct}
+                  onChange={(e) => setTitleAct(e.target.value)}
+                  required
+                />
+              </div>
 
-          <button
-            disabled={loading}
-            onClick={(e) => {
-              e.preventDefault();
-              addActivityHanlder();
-            }}
-          >
-            Create Activity
-          </button>
-        </>
-      )}
+              <div className="mb-3">
+                <label htmlFor="textAct" className="form-label">
+                  Description
+                </label>
+                <textarea
+                  id="textAct"
+                  className="form-control"
+                  placeholder="Enter activity details"
+                  value={textAct}
+                  onChange={(e) => setTextAct(e.target.value)}
+                  rows="4"
+                  required
+                />
+              </div>
+
+              <div className="d-grid">
+                <button
+                  className="btn btn-success"
+                  disabled={loading}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addActivityHanlder();
+                  }}
+                >
+                  Create Activity
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
     </>
   );
 };
