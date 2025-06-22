@@ -15,7 +15,7 @@ export const AuthContext = ({ children }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
 
   const navigate = useNavigate();
 

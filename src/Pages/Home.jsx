@@ -2,8 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ActList } from "../Components/ActList";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/config";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export const Home = () => {
+  const { userData, loading } = useAuthContext();
+
   const navigate = useNavigate();
 
   const signOutHandler = async (e) => {
@@ -16,9 +19,22 @@ export const Home = () => {
       navigate("/");
     }
   };
+
   return (
     <>
-      <div className="text-end p-3" style={{ backgroundColor: "#1e1e26" }}>
+      <div
+        className="d-flex justify-content-between align-items-center p-3"
+        style={{ backgroundColor: "#1e1e26", color: "#f1f1f1" }}
+      >
+        {loading ? (
+          <p className="mb-0">Loading...</p>
+        ) : (
+          <p className="mb-0" style={{ fontWeight: 500, fontSize: "1rem" }}>
+            👋 Welcome,{" "}
+            <span style={{ fontWeight: 600 }}>{userData.username}</span>
+          </p>
+        )}
+
         <button
           onClick={signOutHandler}
           className="btn btn-outline-light btn-sm rounded-pill"
