@@ -58,13 +58,19 @@ export const ActList = () => {
           className="w-100 min-vh-100 py-4"
           style={{ backgroundColor: "#2C2C34", color: "#f1f1f1" }}
         >
-          <div className="container d-flex flex-column gap-4">
+          <div
+            className="container d-flex flex-wrap gap-4 justify-content-start"
+            style={{ rowGap: "1.5rem" }}
+          >
             {getListAct.map((list) => (
               <Link
                 key={list.activityId}
                 to={`/activity-detail/${list.activityId}`}
                 className="text-decoration-none"
                 style={{
+                  flex: "1 1 calc(33.333% - 1rem)",
+                  minWidth: "250px",
+                  maxWidth: "100%",
                   background: "#2E2E38",
                   borderRadius: "16px",
                   padding: "1.5rem",
@@ -95,7 +101,10 @@ export const ActList = () => {
                     marginBottom: "1rem",
                   }}
                 >
-                  🕒 Created: {list.createdAt.toDate().toLocaleString()}
+                  🕒 Created:{" "}
+                  {list.createdAt?.toDate
+                    ? list.createdAt.toDate().toLocaleString()
+                    : "Unknown"}
                 </p>
 
                 <p
