@@ -2,6 +2,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
+import { Link } from "react-router-dom";
 
 export const ActList = () => {
   const [getListAct, setGetListAct] = useState([]);
@@ -59,38 +60,56 @@ export const ActList = () => {
         >
           <div className="container d-flex flex-column gap-4">
             {getListAct.map((list) => (
-              <div
+              <Link
                 key={list.activityId}
+                to={`/activity-detail/${list.activityId}`}
+                className="text-decoration-none"
                 style={{
                   background: "#2E2E38",
                   borderRadius: "16px",
                   padding: "1.5rem",
                   boxShadow: "10px 10px 30px #23232b, -10px -10px 30px #3a3a46",
-                  transition: "transform 0.3s ease",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  color: "#f1f1f1",
+                  display: "block",
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "translateY(-4px)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "translateY(0)")
-                }
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-6px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 20px rgba(108, 99, 255, 0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "10px 10px 30px #23232b, -10px -10px 30px #3a3a46";
+                }}
               >
-                <h4 className="fw-semibold mb-2">{list.titleActivity}</h4>
+                <h4 className="fw-bold mb-2" style={{ color: "#ffffff" }}>
+                  {list.titleActivity}
+                </h4>
+
                 <p
                   style={{
                     fontSize: "0.85rem",
-                    color: "#aaa",
-                    marginBottom: "0.75rem",
+                    color: "#bbb",
+                    marginBottom: "1rem",
                   }}
                 >
-                  Created : {list.createdAt.toDate().toLocaleString()}
+                  🕒 Created: {list.createdAt.toDate().toLocaleString()}
                 </p>
-                <p style={{ fontSize: "1rem", lineHeight: 1.5 }}>
+
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    lineHeight: "1.6",
+                    color: "#dddddd",
+                  }}
+                >
                   {list.textActivity.length > 90
                     ? list.textActivity.slice(0, 90) + "..."
                     : list.textActivity}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
