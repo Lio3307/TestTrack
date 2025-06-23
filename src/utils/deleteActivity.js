@@ -1,7 +1,7 @@
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-export const DeleteActivity = async ({idActivity, idUSer}) => {
+export const DeleteActivity = async (idActivity, idUSer) => {
 
     const confirmDelete = confirm("Are you sure want to delete this?")
     if(!confirmDelete) return;
@@ -13,5 +13,7 @@ export const DeleteActivity = async ({idActivity, idUSer}) => {
         }
     } catch (err) {
         console.error(err)
+    } finally {
+        window.location.href = "/home";
     }
 }
