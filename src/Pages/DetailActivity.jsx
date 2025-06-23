@@ -108,9 +108,17 @@ export const DetailActivity = () => {
               >
                 ✏️ Update
               </Link>
-
               <button
-                onClick={deleteHandler}
+                onClick={() => {
+                    try {
+                        deleteHandler()
+                    } catch (err) {
+                        console.error(err)
+                    } finally {
+                        navigate("/home")
+                    }
+                    
+                }}
                 className="btn btn-outline-danger btn-sm rounded-pill px-4 d-flex align-items-center gap-2"
                 style={{
                   fontWeight: 500,
