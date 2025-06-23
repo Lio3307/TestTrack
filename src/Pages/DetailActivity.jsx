@@ -50,9 +50,19 @@ export const DetailActivity = () => {
       {loading ? (
         <div
           className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
-          style={{ backgroundColor: "#1e1e26", color: "#f1f1f1" }}
+          style={{ backgroundColor: "#1e1e26" }}
         >
-          <p className="fs-5">Loading...</p>
+          <div
+            className="spinner-border"
+            style={{
+              width: "3rem",
+              height: "3rem",
+              color: "#6C63FF",
+            }}
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
       ) : (
         <div
