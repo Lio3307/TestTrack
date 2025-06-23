@@ -79,10 +79,7 @@ export const UpdatedActivity = () => {
         >
           <h2
             className="text-center fw-bold mb-4"
-            style={{
-              color: "#8d79ff",
-              letterSpacing: "0.5px",
-            }}
+            style={{ color: "#8d79ff", letterSpacing: "0.5px" }}
           >
             📝 Update Your Activity
           </h2>
@@ -126,27 +123,50 @@ export const UpdatedActivity = () => {
               ></textarea>
             </div>
 
-            <button
-              type="submit"
-              className="btn w-100 py-2 fw-bold rounded-pill"
-              style={{
-                background: "linear-gradient(135deg, #6C63FF, #8d79ff)",
-                color: "#fff",
-                fontSize: "1rem",
-                letterSpacing: "0.5px",
-                boxShadow: "0 0 12px rgba(108, 99, 255, 0.4)",
-                transition: "0.3s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "0.9";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "1";
-              }}
-            >
-              💾 Save Changes
-            </button>
-            <Link to={`/activity-detail/${id}`}>Cancle</Link>
+            {/* Button Section */}
+            <div className="d-flex gap-3">
+              <button
+                type="submit"
+                className="btn w-100 py-2 fw-bold rounded-pill"
+                style={{
+                  background: "linear-gradient(135deg, #6C63FF, #8d79ff)",
+                  color: "#fff",
+                  fontSize: "1rem",
+                  letterSpacing: "0.5px",
+                  boxShadow: "0 0 12px rgba(108, 99, 255, 0.4)",
+                  transition: "0.3s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = "0.9";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                }}
+              >
+                💾 Save Changes
+              </button>
+
+              <Link
+                to={`/activity-detail/${id}`}
+                className="btn w-100 py-2 fw-bold rounded-pill text-decoration-none text-center"
+                style={{
+                  background: "#2c2c34",
+                  color: "#cccccc",
+                  border: "1px solid #444",
+                  transition: "0.3s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#393949";
+                  e.currentTarget.style.color = "#ffffff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#2c2c34";
+                  e.currentTarget.style.color = "#cccccc";
+                }}
+              >
+                Cancel
+              </Link>
+            </div>
           </form>
         </div>
       )}
