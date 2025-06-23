@@ -22,6 +22,16 @@ export const Register = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const handleRegister = async () => {
+    if (!username.trim() || !password.trim() || !email.trim()) {
+      alert("Input Field Cannot Be Empty");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password At Least 6 Character Length!!");
+      return;
+    }
+
     try {
       setLoading(true);
       await signUpEmail(auth, db, username, email, password);
@@ -173,7 +183,7 @@ export const Register = () => {
                   signInGoogle(db, auth, googleProvider);
                 } catch (error) {
                   console.error(error);
-                } 
+                }
               }}
               style={{
                 padding: "0.75rem",

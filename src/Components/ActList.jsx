@@ -123,7 +123,6 @@ export const ActList = () => {
                     ? list.textActivity.slice(0, 100) + "..."
                     : list.textActivity}
                 </p>
-
                 <div
                   style={{
                     position: "absolute",
