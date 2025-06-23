@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DeleteActivity } from "../utils/deleteActivity";
 
 export const DetailActivity = () => {
   const [detailActivity, setDetailActivity] = useState({});
   const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -30,6 +32,9 @@ export const DetailActivity = () => {
         } finally {
           setLoading(false);
         }
+      } else {
+        alert("User Not LoggedIn!!");
+        navigate("/login");
       }
     });
     return () => unsubs();
@@ -58,9 +63,8 @@ export const DetailActivity = () => {
             padding: "2rem",
           }}
         >
-          {/* Top Bar */}
           <div className="container mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
-            <div className="d-flex gap-2">
+            <div className="d-flex gap-2 flex-wrap">
               <Link
                 to="/home"
                 className="btn btn-outline-light btn-sm rounded-pill px-4"
@@ -73,16 +77,38 @@ export const DetailActivity = () => {
                 ← Back Home
               </Link>
 
+              <Link
+                to={`/update-activity/${id}`}
+                className="btn btn-outline-primary btn-sm rounded-pill px-4"
+                style={{
+                  fontWeight: 500,
+                  fontSize: "0.9rem",
+                  boxShadow: "0 0 10px rgba(108,99,255,0.1)",
+                  color: "#6C63FF",
+                  borderColor: "#6C63FF",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#6C63FF";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = "#6C63FF";
+                }}
+              >
+                ✏️ Update
+              </Link>
+
               <button
                 onClick={deleteHandler}
                 className="btn btn-outline-danger btn-sm rounded-pill px-4 d-flex align-items-center gap-2"
                 style={{
                   fontWeight: 500,
                   fontSize: "0.9rem",
-                  transition: "all 0.3s ease-in-out",
                   borderColor: "#e74c3c",
                   color: "#e74c3c",
                   boxShadow: "0 0 10px rgba(231, 76, 60, 0.15)",
+                  transition: "all 0.3s ease-in-out",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = "#e74c3c";
@@ -93,16 +119,15 @@ export const DetailActivity = () => {
                   e.currentTarget.style.color = "#e74c3c";
                 }}
               >
-                <span style={{ fontSize: "1rem" }}>🗑️</span> Delete
+                🗑️ Delete
               </button>
             </div>
 
             <span style={{ color: "#bbbbbb", fontSize: "0.85rem" }}>
-              Created: {detailActivity.createdAt?.toDate().toLocaleString()}
+              🕒 Created: {detailActivity.createdAt?.toDate().toLocaleString()}
             </span>
           </div>
 
-          {/* Title */}
           <div className="container mb-3">
             <h1
               className="fw-bold"
@@ -117,7 +142,6 @@ export const DetailActivity = () => {
             </h1>
           </div>
 
-          {/* Text Content */}
           <div className="container">
             <div
               style={{
@@ -135,6 +159,7 @@ export const DetailActivity = () => {
                   lineHeight: 1.8,
                   whiteSpace: "pre-line",
                   textAlign: "justify",
+                  marginBottom: 0,
                 }}
               >
                 {detailActivity.textActivity}

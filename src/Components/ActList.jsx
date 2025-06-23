@@ -105,7 +105,7 @@ export const ActList = () => {
                   }}
                 >
                   <span role="img" aria-label="clock">
-                    🕒
+                    🕒 Created :
                   </span>{" "}
                   {list.createdAt?.toDate
                     ? list.createdAt.toDate().toLocaleString()

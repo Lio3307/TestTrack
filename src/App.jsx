@@ -5,7 +5,7 @@ import { Home } from "./Pages/Home";
 import { AddAct } from "./Components/AddAct";
 import { useEffect } from "react";
 import { DetailActivity } from "./Pages/DetailActivity";
-
+import { UpdatedActivity } from "./Components/UpdatedActivity";
 
 function App() {
     useEffect(() => {
@@ -21,6 +21,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/add-activity" element={<AddAct/>}/>
         <Route path="/activity-detail/:id" element={<DetailActivity />}/>
+        <Route path="/update-activity/:id" element={<UpdatedActivity />}/>
       </Routes>
     </>
   );

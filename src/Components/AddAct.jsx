@@ -2,11 +2,6 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-{
-  /** Title, Neumorphic input */
-}
-
-import { Link } from "react-router-dom";
 
 export const AddAct = () => {
   const [titleAct, setTitleAct] = useState("");
