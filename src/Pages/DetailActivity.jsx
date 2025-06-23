@@ -3,15 +3,18 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
 import { Link, useParams } from "react-router-dom";
+import { DeleteActivity } from "../utils/deleteActivity";
 
 export const DetailActivity = () => {
   const [detailActivity, setDetailActivity] = useState({});
+  const [userId, setUserId] = useState(null)
 
   const { id } = useParams();
 
   useEffect(() => {
     const unsubs = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setUserId(user.uid)
         const getActivityRef = doc(db, "Users", user.uid, "Activity", id);
         const activitySnapshot = await getDoc(getActivityRef);
         if (activitySnapshot.exists()) {
@@ -24,6 +27,11 @@ export const DetailActivity = () => {
     });
     return () => unsubs();
   }, []);
+
+  const deleteHandler = (e) => {
+    e.preventDefault()
+    DeleteActivity(id, userId)
+  }
 
   return (
     <>
@@ -47,6 +55,8 @@ export const DetailActivity = () => {
           >
             ← Back Home
           </Link>
+
+          <button onClick={deleteHandler}>Delete Activity</button>
 
           <span className=" small">
            Created : {detailActivity.createdAt?.toDate().toLocaleString()}
