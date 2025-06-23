@@ -56,8 +56,12 @@ export const AddAct = () => {
             position: "relative",
           }}
         >
-          <Link
-            to="/home"
+          <button
+          onClick={(e) => {
+            e.preventDefault()
+            navigate("/home")
+          }}
+          disabled={loading}
             style={{
               position: "absolute",
               top: "16px",
@@ -87,7 +91,7 @@ export const AddAct = () => {
             }}
           >
             ❌ Cancel
-          </Link>
+          </button>
 
           <div className="text-center mb-4">
             <div
