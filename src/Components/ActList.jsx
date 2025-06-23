@@ -35,7 +35,6 @@ export const ActList = () => {
       }
     });
 
-    // cleanup listener
     return () => unsubscribe();
   }, []);
 
@@ -54,13 +53,10 @@ export const ActList = () => {
           <h3 className="text-center">No Activity Created</h3>
         </div>
       ) : (
-        <div
-          className="w-100 min-vh-100 py-4"
-          style={{ backgroundColor: "#2C2C34", color: "#f1f1f1" }}
-        >
+        <div className="w-100 min-vh-100 py-4" style={{ color: "#f1f1f1" }}>
           <div
-            className="container d-flex flex-wrap gap-4 justify-content-start"
-            style={{ rowGap: "1.5rem" }}
+            className="container d-flex flex-wrap justify-content-start"
+            style={{ gap: "1.5rem" }}
           >
             {getListAct.map((list) => (
               <Link
@@ -68,40 +64,49 @@ export const ActList = () => {
                 to={`/activity-detail/${list.activityId}`}
                 className="text-decoration-none"
                 style={{
-                  flex: "1 1 calc(33.333% - 1rem)",
-                  minWidth: "250px",
-                  maxWidth: "100%",
-                  background: "#2E2E38",
-                  borderRadius: "16px",
-                  padding: "1.5rem",
-                  boxShadow: "10px 10px 30px #23232b, -10px -10px 30px #3a3a46",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  flex: "1 1 calc(31% - 1rem)",
+                  minWidth: "260px",
+                  background: "linear-gradient(145deg, #2e2e38, #26262d)",
+                  borderRadius: "18px",
+                  padding: "1.8rem",
+                  boxShadow: "6px 6px 12px #1e1e26, -6px -6px 12px #3a3a46",
+                  transition: "all 0.3s ease-in-out",
                   color: "#f1f1f1",
                   display: "block",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-6px)";
+                  e.currentTarget.style.transform = "translateY(-5px)";
                   e.currentTarget.style.boxShadow =
-                    "0 0 20px rgba(108, 99, 255, 0.4)";
+                    "0 0 20px rgba(108, 99, 255, 0.3)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
                   e.currentTarget.style.boxShadow =
-                    "10px 10px 30px #23232b, -10px -10px 30px #3a3a46";
+                    "6px 6px 12px #1e1e26, -6px -6px 12px #3a3a46";
                 }}
               >
-                <h4 className="fw-bold mb-2" style={{ color: "#ffffff" }}>
+                <h5
+                  className="fw-bold mb-2"
+                  style={{
+                    color: "#ffffff",
+                    fontSize: "1.25rem",
+                  }}
+                >
                   {list.titleActivity}
-                </h4>
+                </h5>
 
                 <p
                   style={{
                     fontSize: "0.85rem",
-                    color: "#bbb",
+                    color: "#aaa",
                     marginBottom: "1rem",
                   }}
                 >
-                  🕒 Created:{" "}
+                  <span role="img" aria-label="clock">
+                    🕒
+                  </span>{" "}
                   {list.createdAt?.toDate
                     ? list.createdAt.toDate().toLocaleString()
                     : "Unknown"}
@@ -110,14 +115,25 @@ export const ActList = () => {
                 <p
                   style={{
                     fontSize: "1rem",
-                    lineHeight: "1.6",
-                    color: "#dddddd",
+                    color: "#e0e0e0",
+                    lineHeight: 1.6,
                   }}
                 >
-                  {list.textActivity.length > 90
-                    ? list.textActivity.slice(0, 90) + "..."
+                  {list.textActivity.length > 100
+                    ? list.textActivity.slice(0, 100) + "..."
                     : list.textActivity}
                 </p>
+
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    width: "100%",
+                    height: "4px",
+                    background: "linear-gradient(to right, #6C63FF, #9A7DFF)",
+                  }}
+                />
               </Link>
             ))}
           </div>

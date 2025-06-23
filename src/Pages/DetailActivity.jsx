@@ -75,38 +75,71 @@ export const DetailActivity = () => {
 
               <button
                 onClick={deleteHandler}
-                className="btn btn-danger btn-sm rounded-pill px-4"
+                className="btn btn-outline-danger btn-sm rounded-pill px-4 d-flex align-items-center gap-2"
                 style={{
                   fontWeight: 500,
                   fontSize: "0.9rem",
-                  boxShadow: "0 0 10px rgba(255, 0, 0, 0.2)",
+                  transition: "all 0.3s ease-in-out",
+                  borderColor: "#e74c3c",
+                  color: "#e74c3c",
+                  boxShadow: "0 0 10px rgba(231, 76, 60, 0.15)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#e74c3c";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = "#e74c3c";
                 }}
               >
-                🗑️ Delete
+                <span style={{ fontSize: "1rem" }}>🗑️</span> Delete
               </button>
             </div>
 
-            <span className="small text-muted">
-              {detailActivity.createdAt?.toDate().toLocaleString()}
+            <span style={{ color: "#bbbbbb", fontSize: "0.85rem" }}>
+              Created: {detailActivity.createdAt?.toDate().toLocaleString()}
             </span>
           </div>
 
-          {/* Content */}
-          <div className="container">
-            <h1 className="fw-bold mb-3" style={{ fontSize: "2.5rem" }}>
-              {detailActivity.titleActivity}
-            </h1>
-
-            <p
+          {/* Title */}
+          <div className="container mb-3">
+            <h1
+              className="fw-bold"
               style={{
-                fontSize: "1.1rem",
-                color: "#dcdcdc",
-                lineHeight: 1.8,
-                whiteSpace: "pre-line",
+                fontSize: "2.4rem",
+                color: "#f5f5f5",
+                borderBottom: "2px solid #3a3a46",
+                paddingBottom: "0.5rem",
               }}
             >
-              {detailActivity.textActivity}
-            </p>
+              {detailActivity.titleActivity}
+            </h1>
+          </div>
+
+          {/* Text Content */}
+          <div className="container">
+            <div
+              style={{
+                backgroundColor: "#2a2a33",
+                borderRadius: "12px",
+                padding: "1.5rem",
+                boxShadow:
+                  "inset 3px 3px 6px #1a1a1f, inset -3px -3px 6px #33333a",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "1.1rem",
+                  color: "#e0e0e0",
+                  lineHeight: 1.8,
+                  whiteSpace: "pre-line",
+                  textAlign: "justify",
+                }}
+              >
+                {detailActivity.textActivity}
+              </p>
+            </div>
           </div>
         </div>
       )}
