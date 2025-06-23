@@ -108,7 +108,7 @@ export const ActList = () => {
                     🕒 Created :
                   </span>{" "}
                   {list.createdAt?.toDate
-                    ? list.createdAt.toDate().toLocaleString()
+                    ? list.createdAt?.toDate().toLocaleString()
                     : "Unknown"}
                 </p>
 

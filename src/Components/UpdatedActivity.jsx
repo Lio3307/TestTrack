@@ -63,111 +63,101 @@ export const UpdatedActivity = () => {
   return (
     <>
       {loading ? (
-        <div className="text-center text-light py-5">
-          <div className="spinner-border text-light mb-3" role="status" />
-          <h5>Loading activity...</h5>
+        <div
+          className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
+          style={{ backgroundColor: "#1e1e26" }}
+        >
+          <div
+            className="spinner-border"
+            style={{ width: "3rem", height: "3rem", color: "#8d79ff" }}
+            role="status"
+          />
         </div>
       ) : (
         <div
-          className="container my-5 p-4 rounded shadow"
+          className="w-100 min-vh-100"
           style={{
-            background: "#1f1f27",
+            backgroundColor: "#1e1e26",
             color: "#f1f1f1",
-            maxWidth: "550px",
-            border: "1px solid #333",
+            padding: "2rem",
           }}
         >
-          <h2
-            className="text-center fw-bold mb-4"
-            style={{ color: "#8d79ff", letterSpacing: "0.5px" }}
-          >
-            📝 Update Your Activity
-          </h2>
-
-          <form onSubmit={updateHandler}>
-            <div className="mb-4">
-              <label htmlFor="titleInput" className="form-label fw-semibold">
-                Title
-              </label>
-              <input
-                id="titleInput"
-                type="text"
-                className="form-control bg-dark text-light border-0 rounded px-3 py-2"
-                placeholder="e.g. My New Awesome Title"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                required
+          <div className="container mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div className="d-flex gap-2 flex-wrap">
+              <Link
+                to="/home"
+                className="btn btn-outline-light btn-sm rounded-pill px-4"
                 style={{
-                  boxShadow:
-                    "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
-                }}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="textInput" className="form-label fw-semibold">
-                Description
-              </label>
-              <textarea
-                id="textInput"
-                className="form-control bg-dark text-light border-0 rounded px-3 py-2"
-                placeholder="Write your thoughts..."
-                rows="6"
-                value={newText}
-                onChange={(e) => setNewText(e.target.value)}
-                required
-                style={{
-                  boxShadow:
-                    "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
-                }}
-              ></textarea>
-            </div>
-
-            {/* Button Section */}
-            <div className="d-flex gap-3">
-              <button
-                type="submit"
-                className="btn w-100 py-2 fw-bold rounded-pill"
-                style={{
-                  background: "linear-gradient(135deg, #6C63FF, #8d79ff)",
-                  color: "#fff",
-                  fontSize: "1rem",
-                  letterSpacing: "0.5px",
-                  boxShadow: "0 0 12px rgba(108, 99, 255, 0.4)",
-                  transition: "0.3s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = "0.9";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "1";
+                  fontWeight: 500,
+                  fontSize: "0.9rem",
+                  boxShadow: "0 0 10px rgba(255,255,255,0.1)",
                 }}
               >
-                💾 Save Changes
-              </button>
+                ← Back Home
+              </Link>
 
               <Link
                 to={`/activity-detail/${id}`}
-                className="btn w-100 py-2 fw-bold rounded-pill text-decoration-none text-center"
+                className="btn btn-outline-secondary btn-sm rounded-pill px-4"
                 style={{
-                  background: "#2c2c34",
-                  color: "#cccccc",
-                  border: "1px solid #444",
-                  transition: "0.3s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#393949";
-                  e.currentTarget.style.color = "#ffffff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#2c2c34";
-                  e.currentTarget.style.color = "#cccccc";
+                  fontWeight: 500,
+                  fontSize: "0.9rem",
+                  borderColor: "#aaa",
+                  color: "#ccc",
                 }}
               >
-                Cancel
+                ❌ Cancel
               </Link>
             </div>
-          </form>
+
+            <div className="d-flex align-items-center gap-3 flex-wrap">
+              <button
+                type="button"
+                onClick={updateHandler}
+                className="btn btn-sm fw-semibold rounded-pill px-4 py-2"
+                style={{
+                  background: "linear-gradient(135deg, #6C63FF, #8d79ff)",
+                  color: "#fff",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 0 12px rgba(108, 99, 255, 0.4)",
+                }}
+              >
+                💾 Save
+              </button>
+            </div>
+          </div>
+
+          <div className="container">
+            <form onSubmit={updateHandler}>
+              <input
+                type="text"
+                placeholder="Note Title"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                className="form-control bg-dark text-light border-0 mb-4 px-4 py-3 fs-3 fw-bold rounded"
+                style={{
+                  boxShadow:
+                    "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
+                }}
+                required
+              />
+
+              <textarea
+                placeholder="Write your note here..."
+                value={newText}
+                onChange={(e) => setNewText(e.target.value)}
+                rows="12"
+                className="form-control bg-dark text-light border-0 mb-4 px-4 py-3 fs-5 rounded"
+                style={{
+                  lineHeight: "1.8",
+                  resize: "vertical",
+                  boxShadow:
+                    "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
+                }}
+                required
+              ></textarea>
+            </form>
+          </div>
         </div>
       )}
     </>
