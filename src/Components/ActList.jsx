@@ -1,42 +1,26 @@
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { auth, db } from "../firebase/config";
-import { onAuthStateChanged } from "firebase/auth";
 import { Link } from "react-router-dom";
 
-export const ActList = () => {
-  const [getListAct, setGetListAct] = useState([]);
-  const [loading, setLoading] = useState(true);
+export const ActList = ({loading, listAct}) => {
+ 
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const getAct = async () => {
-          try {
-            const collectionRef = collection(db, "Users", user.uid, "Activity");
-            const collectionSnap = await getDocs(collectionRef);
+  // const handleSearch = async () => {
+  //   try {
+  //     const user = auth.currentUser
+  //     const docsRef = collection(db, "Users", user.uid, "Activity")
+  //     const q = await query(docsRef, where("textActivity".toLowerCase(), "==", searchAct))
+  //     const snapDocs = await getDocs(q)
+  //     if(snapDocs) {
+  //       const resultData = snapDocs.docs.map((doc) => ({
+  //         activityId: doc.id,
+  //         ...doc.data()
+  //       }))
+  //       setGetFilteredActivity(resultData)
+  //     }
+  //   } catch (err) {
+  //     console.error(err)
+  //   }
+  // }
 
-            const list = collectionSnap.docs.map((doc) => ({
-              activityId: doc.id,
-              ...doc.data(),
-            }));
-
-            setGetListAct(list);
-          } catch (err) {
-            console.error(err);
-          } finally {
-            setLoading(false);
-          }
-        };
-
-        getAct();
-      } else {
-        setLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   return (
     <>
@@ -45,7 +29,7 @@ export const ActList = () => {
           <div className="spinner-border text-light mb-3" role="status" />
           <p>Loading activities...</p>
         </div>
-      ) : getListAct.length === 0 ? (
+      ) : listAct.length === 0 ? (
         <div
           className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
           style={{ backgroundColor: "#2C2C34", color: "#f1f1f1" }}
@@ -58,7 +42,7 @@ export const ActList = () => {
             className="container d-flex flex-wrap justify-content-start"
             style={{ gap: "1.5rem" }}
           >
-            {getListAct.map((list) => (
+            {listAct.map((list) => (
               <Link
                 key={list.activityId}
                 to={`/activity-detail/${list.activityId}`}

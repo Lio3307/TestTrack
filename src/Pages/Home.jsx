@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ActList } from "../Components/ActList";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../firebase/config";
 import { useAuthContext } from "../contexts/AuthContext";
-
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
 export const Home = () => {
-  const { userData, loading } = useAuthContext();
+  const [getListAct, setGetListAct] = useState([]);
+  const { userData, loading, setLoading } = useAuthContext();
+  const [filteredActivity, setFilteredActivity] = useState("");
 
   const navigate = useNavigate();
 
@@ -19,6 +22,36 @@ export const Home = () => {
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const getAct = async () => {
+          try {
+            const collectionRef = collection(db, "Users", user.uid, "Activity");
+            const collectionSnap = await getDocs(collectionRef);
+
+            const list = collectionSnap.docs.map((doc) => ({
+              activityId: doc.id,
+              ...doc.data(),
+            }));
+
+            setGetListAct(list);
+          } catch (err) {
+            console.error(err);
+          } finally {
+            setLoading(false);
+          }
+        };
+
+        getAct();
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
@@ -110,11 +143,19 @@ export const Home = () => {
           </Link>
         </div>
 
+        <input
+          value={filteredActivity}
+          onChange={(e) => {
+            setFilteredActivity(e.target.value);
+          }}
+          type="text"
+        />
+
         <div className="text-center mb-4">
           <h3 className="fw-bold">Activity List</h3>
         </div>
 
-        <ActList />
+        <ActList searchAct={filteredActivity} loading={loading} listAct={getListAct}/>
       </div>
     </>
   );
