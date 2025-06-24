@@ -1,26 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const ActList = ({loading, listAct}) => {
- 
 
-  // const handleSearch = async () => {
-  //   try {
-  //     const user = auth.currentUser
-  //     const docsRef = collection(db, "Users", user.uid, "Activity")
-  //     const q = await query(docsRef, where("textActivity".toLowerCase(), "==", searchAct))
-  //     const snapDocs = await getDocs(q)
-  //     if(snapDocs) {
-  //       const resultData = snapDocs.docs.map((doc) => ({
-  //         activityId: doc.id,
-  //         ...doc.data()
-  //       }))
-  //       setGetFilteredActivity(resultData)
-  //     }
-  //   } catch (err) {
-  //     console.error(err)
-  //   }
-  // }
 
+  useEffect(() => {
+    
+  }, [listAct])
 
   return (
     <>
@@ -32,7 +18,7 @@ export const ActList = ({loading, listAct}) => {
       ) : listAct.length === 0 ? (
         <div
           className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
-          style={{ backgroundColor: "#2C2C34", color: "#f1f1f1" }}
+          
         >
           <h3 className="text-center">No Activity Created</h3>
         </div>

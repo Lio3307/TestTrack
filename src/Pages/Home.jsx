@@ -9,6 +9,7 @@ export const Home = () => {
   const [getListAct, setGetListAct] = useState([]);
   const { userData, loading, setLoading } = useAuthContext();
   const [filteredActivity, setFilteredActivity] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
 
   const navigate = useNavigate();
 
@@ -52,6 +53,29 @@ export const Home = () => {
 
     return () => unsubscribe();
   }, []);
+
+  const handleSearch = async () => {
+    try {
+      const user = auth.currentUser;
+      const docsRef = collection(db, "Users", user.uid, "Activity");
+      const snapDocs = await getDocs(docsRef);
+      if (snapDocs) {
+        const resultData = snapDocs.docs
+          .map((doc) => ({
+            activityId: doc.id,
+            ...doc.data(),
+          }))
+          .filter((doc) =>
+            doc.textActivity
+              ?.toLowerCase()
+              .includes(filteredActivity.toLowerCase())
+          );
+        setFilteredData(resultData);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -145,17 +169,34 @@ export const Home = () => {
 
         <input
           value={filteredActivity}
-          onChange={(e) => {
-            setFilteredActivity(e.target.value);
-          }}
+          onChange={(e) => setFilteredActivity(e.target.value)}
           type="text"
+          className="form-control bg-dark text-light mb-3"
+          placeholder="Search by text..."
         />
+        <button onClick={handleSearch} className="btn btn-outline-light mb-4">
+          🔍 Search
+        </button>
 
         <div className="text-center mb-4">
           <h3 className="fw-bold">Activity List</h3>
         </div>
 
-        <ActList searchAct={filteredActivity} loading={loading} listAct={getListAct}/>
+        {filteredData ? (
+          <div>
+            {filteredData.length > 0 ? (
+              <div>
+                <ActList loading={loading} listAct={filteredData} />
+              </div>
+            ) : (
+              <div>Activity Not Found</div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <ActList loading={loading} listAct={getListAct} />
+          </div>
+        )}
       </div>
     </>
   );
