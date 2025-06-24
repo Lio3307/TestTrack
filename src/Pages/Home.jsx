@@ -8,7 +8,7 @@ import { collection, getDocs } from "firebase/firestore";
 export const Home = () => {
   const [getListAct, setGetListAct] = useState([]);
   const { userData, loading, setLoading } = useAuthContext();
-  const [filteredActivity, setFilteredActivity] = useState("");
+  const [searchActivity, setSearchActivity] = useState("");
   const [filteredData, setFilteredData] = useState(null);
 
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ export const Home = () => {
           .filter((doc) =>
             doc.textActivity
               ?.toLowerCase()
-              .includes(filteredActivity.toLowerCase())
+              .includes(searchActivity.toLowerCase()) || doc.titleActivity?.toLowerCase().includes(searchActivity.toLowerCase())
           );
         setFilteredData(resultData);
       }
@@ -76,6 +76,12 @@ export const Home = () => {
       console.error(err);
     }
   };
+
+  const handleResetSearch = (e) => {
+    e.preventDefault()
+    setSearchActivity("")
+    setFilteredData(null)
+  }
 
   return (
     <>
@@ -145,15 +151,7 @@ export const Home = () => {
                 "8px 8px 16px #19191f, -8px -8px 16px #3b3b49";
             }}
           >
-            <span
-              style={{
-                fontSize: "3.2rem",
-                color: "#6C63FF",
-                transition: "transform 0.3s ease-in-out",
-              }}
-            >
-              ＋
-            </span>
+            <span style={{ fontSize: "3.2rem", color: "#6C63FF" }}>＋</span>
             <span
               style={{
                 fontWeight: "600",
@@ -167,36 +165,40 @@ export const Home = () => {
           </Link>
         </div>
 
-        <input
-          value={filteredActivity}
-          onChange={(e) => setFilteredActivity(e.target.value)}
-          type="text"
-          className="form-control bg-dark text-light mb-3"
-          placeholder="Search by text..."
-        />
-        <button onClick={handleSearch} className="btn btn-outline-light mb-4">
-          🔍 Search
-        </button>
+        <div className="mb-4 d-flex gap-2 justify-content-center flex-wrap">
+          <input
+            value={searchActivity}
+            onChange={(e) => setSearchActivity(e.target.value)}
+            type="text"
+            className="form-control bg-dark text-light"
+            placeholder="Search by description..."
+            style={{ maxWidth: "400px" }}
+          />
+          <button onClick={handleSearch} className="btn btn-outline-light">
+            🔍 Search
+          </button>
+          {filteredData !== null && (
+            <button onClick={handleResetSearch} className="btn btn-secondary">
+              ❌ 
+            </button>
+          )}
+        </div>
 
         <div className="text-center mb-4">
           <h3 className="fw-bold">Activity List</h3>
         </div>
 
-        {filteredData ? (
-          <div>
-            {filteredData.length > 0 ? (
-              <div>
-                <ActList loading={loading} listAct={filteredData} />
-              </div>
+        <div>
+          {filteredData !== null ? (
+            filteredData.length > 0 ? (
+              <ActList loading={loading} listAct={filteredData} />
             ) : (
-              <div>Activity Not Found</div>
-            )}
-          </div>
-        ) : (
-          <div>
+              <div className="text-center text-muted">Activity Not Found</div>
+            )
+          ) : (
             <ActList loading={loading} listAct={getListAct} />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );

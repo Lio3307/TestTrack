@@ -35,167 +35,96 @@ export const AddAct = () => {
   };
 
   return (
-    <>
+<>
+  {loading ? (
+    <div
+      className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
+      style={{ backgroundColor: "#1e1e26" }}
+    >
       <div
-        className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
-        style={{ background: "#2C2C34" }}
-      >
-        <div
-          style={{
-            maxWidth: "500px",
-            width: "100%",
-            background: "#2E2E38",
-            borderRadius: "20px",
-            boxShadow: "20px 20px 60px #23232b, -20px -20px 60px #3a3a46",
-            padding: "2rem",
-            position: "relative",
-          }}
-        >
+        className="spinner-border"
+        style={{ width: "3rem", height: "3rem", color: "#8d79ff" }}
+        role="status"
+      />
+    </div>
+  ) : (
+    <div
+      className="w-100 min-vh-100"
+      style={{
+        backgroundColor: "#1e1e26",
+        color: "#f1f1f1",
+        padding: "2rem",
+      }}
+    >
+      <div className="container mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div className="d-flex gap-2 flex-wrap">
           <button
-          onClick={(e) => {
-            e.preventDefault()
-            navigate("/home")
-          }}
-          disabled={loading}
+            onClick={() => navigate("/home")}
+            className="btn btn-outline-light btn-sm rounded-pill px-4"
             style={{
-              position: "absolute",
-              top: "16px",
-              right: "16px",
-              backgroundColor: "#3a3a46",
-              color: "#fff",
-              padding: "8px 14px",
-              borderRadius: "10px",
-              textDecoration: "none",
-              fontSize: "0.85rem",
-              fontWeight: "500",
-              boxShadow: "4px 4px 10px #1e1e24, -2px -2px 6px #4a4a58",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              transition: "all 0.2s ease-in-out",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#dc3545";
-              e.currentTarget.style.boxShadow =
-                "0 0 12px rgba(220, 53, 69, 0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "#3a3a46";
-              e.currentTarget.style.boxShadow =
-                "4px 4px 10px #1e1e24, -2px -2px 6px #4a4a58";
+              fontWeight: 500,
+              fontSize: "0.9rem",
+              boxShadow: "0 0 10px rgba(255,255,255,0.1)",
             }}
           >
-            ❌ Cancel
+            ← Back Home
           </button>
+        </div>
 
-          <div className="text-center mb-4">
-            <div
-              style={{
-                width: 60,
-                height: 60,
-                margin: "0 auto",
-                borderRadius: "50%",
-                background: "#2C2C34",
-                boxShadow: "8px 8px 16px #23232b, -8px -8px 16px #3a3a46",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <span className="fs-3">📝</span>
-            </div>
-            <h2 className="text-light fw-bold mt-3">Create Activity</h2>
-          </div>
-
-          {loading ? (
-            <div className="text-center py-5">
-              <div className="spinner-border text-light mb-3" role="status" />
-              <p className="text-secondary">Saving...</p>
-            </div>
-          ) : (
-            <form>
-              <div className="mb-4">
-                <input
-                  type="text"
-                  value={titleAct}
-                  onChange={(e) => setTitleAct(e.target.value)}
-                  placeholder="Activity Title"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "1rem",
-                    borderRadius: "12px",
-                    border: "none",
-                    background: "#2C2C34",
-                    boxShadow:
-                      "inset 5px 5px 10px #23232b, inset -5px -5px 10px #3a3a46",
-                    color: "#eee",
-                    fontSize: "1rem",
-                  }}
-                />
-              </div>
-
-              <div className="mb-5">
-                <textarea
-                  value={textAct}
-                  onChange={(e) => setTextAct(e.target.value)}
-                  placeholder="Describe your activity..."
-                  required
-                  rows="4"
-                  style={{
-                    width: "100%",
-                    padding: "1rem",
-                    borderRadius: "12px",
-                    border: "none",
-                    background: "#2C2C34",
-                    boxShadow:
-                      "inset 5px 5px 10px #23232b, inset -5px -5px 10px #3a3a46",
-                    color: "#eee",
-                    fontSize: "1rem",
-                  }}
-                ></textarea>
-              </div>
-
-              <div className="d-grid">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    addActivityHanlder();
-                  }}
-                  disabled={loading}
-                  className="w-100"
-                  style={{
-                    padding: "0.85rem 1rem",
-                    borderRadius: "12px",
-                    border: "none",
-                    background: "#6C63FF",
-                    color: "#ffffff",
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.5rem",
-                    letterSpacing: "0.5px",
-                    boxShadow: "0 4px 15px rgba(108, 99, 255, 0.3)",
-                    transition: "all 0.3s ease-in-out",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.boxShadow =
-                      "0 0 20px rgba(108, 99, 255, 0.6)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.boxShadow =
-                      "0 4px 15px rgba(108, 99, 255, 0.3)")
-                  }
-                >
-                  <span style={{ fontSize: "1.2rem" }}>🚀</span> Create Activity
-                </button>
-              </div>
-            </form>
-          )}
+        <div className="d-flex align-items-center gap-3 flex-wrap">
+          <button
+            type="button"
+            onClick={addActivityHanlder}
+            className="btn btn-sm fw-semibold rounded-pill px-4 py-2"
+            style={{
+              background: "linear-gradient(135deg, #6C63FF, #8d79ff)",
+              color: "#fff",
+              fontSize: "0.9rem",
+              boxShadow: "0 0 12px rgba(108, 99, 255, 0.4)",
+            }}
+          >
+            🚀 Create Activity
+          </button>
         </div>
       </div>
-    </>
+
+      <div className="container">
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          addActivityHanlder();
+        }}>
+          <input
+            type="text"
+            placeholder="Activity Title"
+            value={titleAct}
+            onChange={(e) => setTitleAct(e.target.value)}
+            className="form-control bg-dark text-light border-0 mb-4 px-4 py-3 fs-3 fw-bold rounded"
+            style={{
+              boxShadow:
+                "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
+            }}
+            required
+          />
+
+          <textarea
+            placeholder="Describe your activity..."
+            value={textAct}
+            onChange={(e) => setTextAct(e.target.value)}
+            rows="10"
+            className="form-control bg-dark text-light border-0 mb-4 px-4 py-3 fs-5 rounded"
+            style={{
+              lineHeight: "1.8",
+              resize: "vertical",
+              boxShadow:
+                "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
+            }}
+            required
+          ></textarea>
+        </form>
+      </div>
+    </div>
+  )}
+</>
+
   );
 };
