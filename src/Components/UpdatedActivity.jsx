@@ -46,6 +46,11 @@ export const UpdatedActivity = () => {
   const updateHandler = (e) => {
     e.preventDefault();
 
+    if(!newText.trim() || !newTitle.trim()) {
+        alert("Input Field Cannot Be Empty!!")
+        return;
+    }
+
     try {
       setLoading(true);
       UpdateActivity(getUserId, id, {
@@ -56,7 +61,7 @@ export const UpdatedActivity = () => {
       console.error(err);
     } finally {
       setLoading(false);
-      navigate("/home");
+      navigate(`/activity-detail/${id}`);
     }
   };
 
