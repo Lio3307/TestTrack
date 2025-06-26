@@ -1,12 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export const ActList = ({loading, listAct}) => {
-
-
-  useEffect(() => {
-    
-  }, [listAct])
+export const ActList = ({ loading, listAct }) => {
+  useEffect(() => {}, [listAct]);
 
   return (
     <>
@@ -16,10 +12,7 @@ export const ActList = ({loading, listAct}) => {
           <p>Loading activities...</p>
         </div>
       ) : listAct.length === 0 ? (
-        <div
-          className="w-100 min-vh-100 d-flex justify-content-center align-items-center"
-          
-        >
+        <div className="w-100 min-vh-100 d-flex justify-content-center align-items-center">
           <h3 className="text-center">No Activity Created</h3>
         </div>
       ) : (
@@ -80,6 +73,26 @@ export const ActList = ({loading, listAct}) => {
                   {list.createdAt?.toDate
                     ? list.createdAt?.toDate().toLocaleString()
                     : "Unknown"}
+                </p>
+
+                <p
+                  className="badge px-3 py-2 mb-4 text-capitalize"
+                  style={{
+                    fontSize: "0.85rem",
+                    fontWeight: "500",
+                    borderRadius: "12px",
+                    backgroundColor:
+                      list.status === "Completed"
+                        ? "#28a745"
+                        : list.status === "On Progress"
+                        ? "#6c757d"
+                        : "#dc3545",
+                    color: "#fff",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  {list.status}
                 </p>
 
                 <p

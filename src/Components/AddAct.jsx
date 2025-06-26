@@ -26,7 +26,7 @@ export const AddAct = () => {
         textActivity: textAct,
         status: selectStatus,
         userId: user.uid,
-        createdAt: serverTimestamp(),
+        createdAt: serverTimestamp(), 
       });
     } catch (err) {
       console.error(err);

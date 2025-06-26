@@ -109,7 +109,7 @@ export const DetailActivity = () => {
               </Link>
               <button
                 onClick={(e) => {
-                  e.preventDefault()
+                  e.preventDefault();
                   try {
                     deleteHandler();
                   } catch (err) {
@@ -141,7 +141,26 @@ export const DetailActivity = () => {
             </div>
 
             <span style={{ color: "#bbbbbb", fontSize: "0.85rem" }}>
-              🕒 Created: {detailActivity.createdAt?.toDate().toLocaleString()}
+              🕒 Created : {detailActivity.createdAt?.toDate().toLocaleString()}
+            </span>
+            <span
+              className="badge px-3 py-2 text-capitalize"
+              style={{
+                backgroundColor:
+                  detailActivity.status === "On Progress"
+                    ? "#6c757d"
+                    : detailActivity.status === "Completed"
+                    ? "#28a745"
+                    : "#dc3545",
+                color: "#dddddd",
+                fontSize: "0.85rem",
+                fontWeight: 500,
+                borderRadius: "10px",
+                boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2)",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Status: {detailActivity.status}
             </span>
           </div>
 
