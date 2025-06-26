@@ -13,6 +13,7 @@ export const UpdatedActivity = () => {
   const [getUserId, setUserId] = useState(null);
   const [newText, setNewText] = useState("");
   const [newTitle, setNewTitle] = useState("");
+  const [getSelectedStatus, setGetSelectedStatus] = useState("");
 
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +29,7 @@ export const UpdatedActivity = () => {
             console.log(docData);
             setNewText(docData.textActivity);
             setNewTitle(docData.titleActivity);
+            setGetSelectedStatus(docData.status);
           }
         } catch (err) {
           console.error(err);
@@ -46,9 +48,9 @@ export const UpdatedActivity = () => {
   const updateHandler = (e) => {
     e.preventDefault();
 
-    if(!newText.trim() || !newTitle.trim()) {
-        alert("Input Field Cannot Be Empty!!")
-        return;
+    if (!newText.trim() || !newTitle.trim()) {
+      alert("Input Field Cannot Be Empty!!");
+      return;
     }
 
     try {
@@ -56,6 +58,7 @@ export const UpdatedActivity = () => {
       UpdateActivity(getUserId, id, {
         titleActivity: newTitle,
         textActivity: newText,
+        status: getSelectedStatus,
       });
     } catch (err) {
       console.error(err);
@@ -113,6 +116,34 @@ export const UpdatedActivity = () => {
               >
                 ❌ Cancel
               </Link>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="dropdownPilihan"
+                className="form-label fw-semibold text-light"
+                style={{ fontSize: "1rem", letterSpacing: "0.3px" }}
+              >
+                🗂️ Select Status
+              </label>
+              <select
+                id="dropdownPilihan"
+                name="pilihan"
+                className="form-select bg-dark text-light border-0 shadow-sm"
+                style={{
+                  padding: "0.75rem 1rem",
+                  borderRadius: "12px",
+                  boxShadow:
+                    "inset 2px 2px 6px #14141a, inset -2px -2px 6px #2a2a35",
+                }}
+                value={getSelectedStatus}
+                onChange={(e) => setGetSelectedStatus(e.target.value)}
+                required
+              >
+                <option value="On Progress">🕓 On Progress</option>
+                <option value="Completed">✅ Completed</option>
+                <option value="Not Completed">❌ Not Completed</option>
+              </select>
             </div>
 
             <div className="d-flex align-items-center gap-3 flex-wrap">
