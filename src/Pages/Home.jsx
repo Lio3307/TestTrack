@@ -193,7 +193,7 @@ export const Home = () => {
             filteredData.length > 0 ? (
               <ActList loading={loading} listAct={filteredData} />
             ) : (
-              <div className="text-center text-muted">Activity Not Found</div>
+              <div className="text-center text-light">Activity Not Found</div>
             )
           ) : (
             <ActList loading={loading} listAct={getListAct} />

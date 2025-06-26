@@ -151,7 +151,7 @@ export const UpdatedActivity = () => {
                 placeholder="Write your note here..."
                 value={newText}
                 onChange={(e) => setNewText(e.target.value)}
-                rows="12"
+                rows="10"
                 className="form-control bg-dark text-light border-0 mb-4 px-4 py-3 fs-5 rounded"
                 style={{
                   lineHeight: "1.8",

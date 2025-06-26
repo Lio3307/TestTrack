@@ -40,8 +40,7 @@ export const DetailActivity = () => {
     return () => unsubs();
   }, []);
 
-  const deleteHandler = (e) => {
-    e.preventDefault();
+  const deleteHandler = () => {
     DeleteActivity(id, userId);
   };
 
@@ -109,15 +108,15 @@ export const DetailActivity = () => {
                 ✏️ Update
               </Link>
               <button
-                onClick={() => {
-                    try {
-                        deleteHandler()
-                    } catch (err) {
-                        console.error(err)
-                    } finally {
-                        navigate("/home")
-                    }
-                    
+                onClick={(e) => {
+                  e.preventDefault()
+                  try {
+                    deleteHandler();
+                  } catch (err) {
+                    console.error(err);
+                  } finally {
+                    navigate("/home");
+                  }
                 }}
                 className="btn btn-outline-danger btn-sm rounded-pill px-4 d-flex align-items-center gap-2"
                 style={{
